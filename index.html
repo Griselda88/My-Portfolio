@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Griselda Portfolio</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <!-- CSS FILE -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT SIDE -->
+        <div class="left-section">
+
+            <div class="intro">
+
+                <h1>Griselda Nyasembi</h1>
+
+                <h2>IT Student & Aspiring Project Manager</h2>
+
+                <p>
+                    Passionate about technology, leadership,
+                    digital experiences, and creating solutions
+                    that make an impact.
+                </p>
+
+            </div>
+
+
+
+            <!-- NAVIGATION -->
+            <div class="side-nav">
+
+                <a href="#about">
+                    <span class="line"></span>
+                    ABOUT
+                </a>
+
+                <a href="#experience">
+                    <span class="line"></span>
+                    EXPERIENCE
+                </a>
+
+                <a href="#projects">
+                    <span class="line"></span>
+                    PROJECTS
+                </a>
+
+            </div>
+
+
+
+            <!-- SOCIAL ICONS -->
+            <div class="social-icons">
+
+                <!-- INSERT YOUR GITHUB LINK -->
+                <a href="https://github.com/Griselda88" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+
+                <!-- INSERT YOUR LINKEDIN LINK -->
+                <a href="https://www.linkedin.com/in/griselda-nyasembi" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+
+                <!-- INSERT YOUR EMAIL LINK -->
+                <a href="mailto:griseldanyasembi88@gmail.com">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- RIGHT SIDE -->
+        <div class="right-section">
+
+            <!-- ABOUT -->
+            <section id="about" class="active">
+
+                <p>
+                    I am an Information Technology student with
+                    interests in project management, product
+                    management, digital marketing, and frontend
+                    development. I enjoy combining creativity and
+                    technology to build meaningful and visually
+                    appealing digital experiences.
+                </p>
+
+                <p>
+                    Beyond academics, I have taken on several
+                    leadership and management roles, including
+                    serving as the foundational chair of a
+                    Rotaract club and volunteering during
+                    university career events and programs.
+                </p>
+
+                <p>
+                    I am passionate about learning new technologies,
+                    improving user experiences, and growing my skills
+                    in frontend development, leadership, and
+                    communication.
+                </p>
+
+            </section>
+
+
+
+            <!-- EXPERIENCE -->
+            <section id="experience">
+
+                <h3>Experience</h3>
+
+                <div class="card">
+
+                    <h4>IT Intern</h4>
+
+                    <p class="date">University IT Department</p>
+
+                    <p>
+                        Assisted with technical support,
+                        system maintenance, and digital operations
+                        while gaining practical experience in
+                        information technology environments.
+                    </p>
+
+                </div>
+
+
+
+                <div class="card">
+
+                    <h4>Volunteer – Career Fair</h4>
+
+                    <p class="date">University Event Team</p>
+
+                    <p>
+                        Supported event coordination, organization,
+                        and student engagement activities during
+                        university career programs.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+
+
+            <!-- PROJECTS -->
+            <section id="projects">
+
+                <h3>Projects</h3>
+
+                <div class="card">
+
+                    <h4>Library Management System</h4>
+
+                    <p>
+                        Developed a Java-based GUI application
+                        for managing books and records using
+                        file storage.
+                    </p>
+
+                </div>
+
+
+
+                <div class="card">
+
+                    <h4>Portfolio Website</h4>
+
+                    <p>
+                        Designed and developed a responsive
+                        personal portfolio website using
+                        HTML and CSS.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.right-section section');
+            const navLinks = document.querySelectorAll('.side-nav a');
+
+            function showSection(id) {
+                sections.forEach(section => {
+                    section.classList.toggle('active', section.id === id);
+                });
+            }
+
+            navLinks.forEach(link => {
+                const targetId = link.getAttribute('href').slice(1);
+
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    showSection(targetId);
+
+                    const section = document.getElementById(targetId);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
