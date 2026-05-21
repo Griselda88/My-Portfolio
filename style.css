@@ -232,6 +232,33 @@ body{
 
 
 
+/* experience hero */
+.experience-hero{
+    margin-bottom: 35px;
+}
+
+.experience-image{
+    width: 100%;
+    min-height: 260px;
+    border: 2px dashed rgba(255,255,255,0.45);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+}
+
+.experience-copy{
+    font-size: 18px;
+    line-height: 1.9;
+    color: #ffffff;
+    max-width: 760px;
+}
+
 /* CARDS */
 .card{
     background-color: #2f241d;
@@ -279,6 +306,201 @@ body{
 }
 
 
+/* EXPERIENCE */
+#experience.active{
+    display: block;
+}
+
+.experience-list{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+.experience-card{
+    width: 100%;
+    max-width: 680px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 22px 26px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(60, 20, 80, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.experience-card:hover{
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(221, 184, 146, 0.6);
+    transform: translateY(-3px);
+}
+
+.experience-card h4{
+    font-size: 19px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 14px;
+    line-height: 1.35;
+}
+
+.experience-card .exp-text{
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 0;
+}
+
+.experience-card .exp-text strong{
+    color: #ddb892;
+    font-weight: 600;
+}
+
+.exp-link-wrap{
+    margin-top: 18px;
+    margin-bottom: 0;
+}
+
+.exp-link{
+    display: inline-block;
+    color: #ddb892;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(221, 184, 146, 0.5);
+    transition: 0.3s;
+}
+
+.exp-link:hover{
+    color: #fff4e8;
+    border-bottom-color: #fff4e8;
+}
+
+/* ITINERARY PAGE */
+.itinerary-page{
+    min-height: 100vh;
+    padding: 60px 80px 80px;
+}
+
+.itinerary-header{
+    max-width: 900px;
+    margin: 0 auto 48px;
+}
+
+.back-link{
+    display: inline-block;
+    color: #ddb892;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 28px;
+    transition: 0.3s;
+}
+
+.back-link:hover{
+    color: #fff4e8;
+}
+
+.itinerary-header h1{
+    font-size: 42px;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.itinerary-subtitle{
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+}
+
+.itinerary-main{
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.itinerary-panel{
+    background-color: #2f241d;
+    padding: 32px 36px;
+    border-radius: 18px;
+    border: 1px solid #4b3b30;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.itinerary-panel h2{
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.itinerary-panel p,
+.itinerary-panel li{
+    font-size: 18px;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.itinerary-panel ul{
+    margin-top: 16px;
+    padding-left: 24px;
+}
+
+.itinerary-panel code{
+    font-size: 14px;
+    color: #ddb892;
+}
+
+.itinerary-placeholder{
+    border-style: dashed;
+    border-color: rgba(221, 184, 146, 0.45);
+}
+
+@media(max-width: 1100px){
+    .itinerary-page{
+        padding: 40px 28px 60px;
+    }
+
+    .itinerary-header h1{
+        font-size: 32px;
+    }
+}
+
+#experience .exp-date{
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 12px;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.experience-card ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.experience-card li{
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.experience-card li:last-child{
+    margin-bottom: 0;
+}
+
+.experience-card li::before{
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: #ddb892;
+    font-weight: 600;
+}
 
 /* RESPONSIVE DESIGN */
 @media(max-width: 1100px){
@@ -324,6 +546,15 @@ body{
 
     .social-icons{
         margin-top: 70px;
+    }
+
+    .experience-card{
+        max-width: 100%;
+        padding: 20px 22px;
+    }
+
+    .experience-list{
+        gap: 36px;
     }
 
 }
