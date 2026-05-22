@@ -16,12 +16,20 @@
 body{
     font-family: 'Poppins', sans-serif;
 
-    /* SOFT VIOLET BACKGROUND */
-    background: linear-gradient(90deg, #7c3d8d 0%, #852f4f 40%, #4f2a6f 100%);
-    background-size: 200% 100%;
-    animation: bgPan 8s ease-in-out infinite;
+    /* SOFT VIOLET BACKGROUND — smooth flowing gradient */
+    background: linear-gradient(
+        -45deg,
+        #7c3d8d,
+        #852f4f,
+        #6b3578,
+        #4f2a6f,
+        #7a3d88
+    );
+    background-size: 400% 400%;
+    animation: bgPan 14s ease-in-out infinite;
 
     color: #ffffff;
+    min-height: 100vh;
 }
 
 
@@ -30,8 +38,11 @@ body{
     0% {
         background-position: 0% 50%;
     }
-    100% {
+    50% {
         background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
     }
 }
 
@@ -57,6 +68,74 @@ body{
     top: 80px;
 
     height: fit-content;
+}
+
+/* ABOUT, EXPERIENCE, PROJECTS — fixed left panel */
+body.portfolio-layout{
+    overflow: hidden;
+}
+
+body.portfolio-layout .container{
+    padding: 40px 56px 40px 44px;
+    gap: 0;
+    min-height: 100vh;
+    max-height: 100vh;
+    align-items: stretch;
+}
+
+body.portfolio-layout .left-section{
+    position: fixed;
+    left: 44px;
+    top: 0;
+    width: 36%;
+    max-width: 400px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 28px 0;
+    z-index: 100;
+    overflow: visible;
+}
+
+body.portfolio-layout .right-section{
+    margin-left: calc(36% + 56px);
+    width: calc(64% - 56px);
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-margin-top: 0;
+}
+
+/* ABOUT — no page scroll, content fits on screen */
+body.about-view .right-section{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+body.about-view #about.active{
+    margin-bottom: 0;
+    width: 100%;
+}
+
+body.about-view #about p{
+    font-size: 17px;
+    line-height: 1.65;
+    margin-bottom: 22px;
+}
+
+body.about-view .intro h1{
+    font-size: 52px;
+}
+
+body.about-view .side-nav{
+    margin-top: 44px;
+}
+
+body.about-view .social-icons{
+    margin-top: 44px;
 }
 
 
@@ -200,11 +279,28 @@ body{
 .right-section section{
     display: none;
     margin-bottom: 120px;
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
 }
 
+.right-section section.active,
+.right-section section.is-leaving{
+    display: block;
+}
 
 .right-section section.active{
-    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.right-section section.is-leaving{
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
 }
 
 
@@ -254,15 +350,17 @@ body{
     max-width: 680px;
 }
 
-.project-controls{
+#projects .project-controls{
     display: flex;
     gap: 20px;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin-top: 36px;
-    padding-bottom: 8px;
-    position: relative;
-    z-index: 2;
+    margin-top: 0;
+    margin-bottom: 28px;
+    padding: 8px 0;
+    position: sticky;
+    top: 24px;
+    z-index: 10;
     max-width: 680px;
 }
 
@@ -417,6 +515,201 @@ body{
 #projects.active{
     display: block;
     scroll-margin-top: 100px;
+}
+
+/* GALLERY — full-page view (hides left sidebar) */
+body.gallery-view .left-section{
+    display: none;
+}
+
+body.gallery-view .container{
+    padding: 40px 48px 60px;
+    gap: 0;
+}
+
+body.gallery-view .right-section{
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    min-height: auto;
+}
+
+#gallery.active{
+    display: block;
+    width: 100%;
+}
+
+.gallery-back{
+    display: inline-block;
+    color: #ddb892;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 32px;
+    transition: 0.3s;
+}
+
+.gallery-back:hover{
+    color: #fff4e8;
+}
+
+.gallery-page{
+    width: 100%;
+}
+
+.gallery-section-title{
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    margin-top: 8px;
+}
+
+.gallery-section-title:not(:first-of-type){
+    margin-top: 48px;
+}
+
+.gallery-videos{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.gallery-videos-row-three{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.gallery-videos-row-second{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    align-items: start;
+}
+
+.gallery-videos-row-second .gallery-video-horizontal,
+.gallery-videos-row-second .gallery-video-vertical{
+    width: 100%;
+    max-width: none;
+}
+
+.gallery-photos{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 40px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+.gallery-photos-col{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    min-height: 100%;
+}
+
+.gallery-photos-col-left{
+    align-items: flex-start;
+}
+
+.gallery-photos-col-center{
+    align-items: center;
+}
+
+.gallery-photos-col-right{
+    align-items: flex-end;
+}
+
+.gallery-photos-col .gallery-photo{
+    width: 100%;
+    max-width: 100%;
+    flex-shrink: 0;
+}
+
+.gallery-photos-col .gallery-photo:last-child{
+    margin-top: auto;
+}
+
+.gallery-media{
+    margin: 0;
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: fit-content;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(60, 20, 80, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+}
+
+.gallery-media:hover{
+    transform: translateY(-4px);
+    border-color: rgba(221, 184, 146, 0.6);
+}
+
+.gallery-media figcaption{
+    padding: 12px 14px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+.gallery-videos-row-three .gallery-video{
+    width: 100%;
+    max-width: none;
+}
+
+.gallery-video-horizontal video{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px 12px 0 0;
+    background: #1a1028;
+}
+
+.gallery-videos-row-second .gallery-video-vertical video{
+    width: 100%;
+    height: auto;
+    max-height: 72vh;
+    max-width: 100%;
+}
+
+.gallery-video-vertical video{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 72vh;
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px 12px 0 0;
+    background: #1a1028;
+}
+
+.gallery-photo{
+    width: 100%;
+    max-width: 100%;
+}
+
+.gallery-photo img{
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    border-radius: 12px 12px 0 0;
+    object-fit: contain;
 }
 
 .side-nav a.nav-active{
@@ -638,6 +931,34 @@ body{
 
     .left-section{
         position: static;
+        height: auto;
+        max-width: none;
+    }
+
+    body.portfolio-layout .container{
+        max-height: none;
+        overflow: visible;
+        padding: 50px 40px;
+        gap: 70px;
+    }
+
+    body.portfolio-layout .left-section{
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 0;
+    }
+
+    body.portfolio-layout .right-section{
+        margin-left: 0;
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+    }
+
+    body.about-view .right-section{
+        overflow: visible;
+        display: block;
     }
 
 
@@ -673,5 +994,31 @@ body{
     .experience-list{
         gap: 36px;
     }
+
+    body.gallery-view .container{
+        padding: 32px 24px 48px;
+    }
+
+    .gallery-videos-row-three{
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-videos-row-second{
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .gallery-photos{
+        grid-template-columns: 1fr;
+        row-gap: 28px;
+        padding: 0;
+    }
+
+    .gallery-photos-col{
+        align-items: center !important;
+        max-width: 100%;
+        min-height: auto;
+    }
+
 
 }
