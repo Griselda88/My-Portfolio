@@ -19,9 +19,10 @@
     <!-- CSS FILE -->
     <link rel="stylesheet" href="style.css">
 
+
 </head>
 
-<body>
+<body class="portfolio-layout">
 
     <div class="container">
 
@@ -103,18 +104,20 @@
             <section id="about" class="active">
 
                 <p>
-                    I am an Information Technology student with
-                    interests in project management, product
-                    management, digital marketing, and frontend
-                    development. I enjoy combining creativity and
-                    technology to build meaningful and visually
-                    appealing digital experiences.
+                    I am an Information Technology student with a 
+                    growing passion for leadership, project management, 
+                    and frontend development. I enjoy combining creativity 
+                    and technology to build meaningful and visually appealing
+                    digital experiences while continuously improving my 
+                    technical and problem-solving skills. Through academic projects,
+                    internships, and volunteer experiences, I have developed strong 
+                    abilities in teamwork, communication, organization, and strategic planning.
                 </p>
 
                 <p>
                     Beyond academics, I have taken on several
                     leadership and management roles, including
-                    serving as the foundational chair of a
+                    serving as the Foundation chair of a
                     Rotaract club and volunteering during
                     university career events and programs.
                 </p>
@@ -125,6 +128,20 @@
                     in frontend development, leadership, and
                     communication.
                 </p>
+
+                <div class="about-extra">
+
+                    <h3 class="about-subtitle">Core Focus Areas</h3>
+                    <ul class="about-skills" aria-label="Skills and interests">
+                        <li>Project Management</li>
+                        <li>Frontend Development</li>
+                        <li>Leadership &amp; Team Coordination</li>
+                        <li>User Experience Design</li>
+                        <li>Event &amp; Program Planning</li>
+                        <li>Community Impact</li>
+                    </ul>
+
+                </div>
 
             </section>
 
@@ -155,7 +172,6 @@
                             daily schedules, and cost estimation. I also completed a data entry project that involved compiling Abuja hotel information such as contact details, pricing, and booking links to support client decision-making and travel planning.
                         </p>
                         <p class="exp-link-wrap">
-                            <!-- Replace href below with your file URL if you host the pack elsewhere (PDF, Drive, etc.) -->
                             <a class="exp-link" href="https://docs.google.com/presentation/d/1ku6h35uaoKrl8G4nG8pVa6wNZAKoRnZtrggmCrQZAQA/edit?usp=sharing"
                             >View Travel Itinerary Pack</a>
                         </p>
@@ -337,15 +353,17 @@
             let sectionSwitchTimer = null;
             const FADE_OUT_MS = 450;
             const PAUSE_MS = 120;
-            const FADE_IN_MS = 550;
+            const SECTION_PAUSE_MS = 400;
+
+            function usesPacedTransition(id) {
+                return id === 'experience' || id === 'projects';
+            }
 
             function setLayoutMode(id) {
-                document.body.classList.toggle('gallery-view', id === 'gallery');
-                document.body.classList.toggle(
-                    'portfolio-layout',
-                    id === 'about' || id === 'experience' || id === 'projects'
-                );
-                document.body.classList.toggle('about-view', id === 'about');
+                const isGallery = id === 'gallery';
+                const isPortfolio = id === 'about' || id === 'experience' || id === 'projects';
+                document.body.classList.toggle('gallery-view', isGallery);
+                document.body.classList.toggle('portfolio-layout', isPortfolio);
             }
 
             function scrollToSection(id) {
@@ -354,14 +372,6 @@
 
                 if (id === 'projects' && typeof updateProjectsCarousel === 'function') {
                     requestAnimationFrame(updateProjectsCarousel);
-                }
-
-                if (id === 'about') {
-                    window.scrollTo({ top: 0, behavior: 'auto' });
-                    if (rightSection) {
-                        rightSection.scrollTop = 0;
-                    }
-                    return;
                 }
 
                 if (id === 'gallery') {
@@ -375,16 +385,25 @@
                 }
             }
 
-            function activateSection(id) {
+            function activateSection(id, animateIn) {
                 const section = document.getElementById(id);
                 if (!section) return;
 
                 sections.forEach(function(s) {
-                    s.classList.remove('active', 'is-leaving');
+                    s.classList.remove('active', 'is-leaving', 'section-enter');
                 });
 
                 section.classList.add('active');
                 setLayoutMode(id);
+
+                if (animateIn) {
+                    section.classList.add('section-enter');
+                    requestAnimationFrame(function() {
+                        requestAnimationFrame(function() {
+                            section.classList.remove('section-enter');
+                        });
+                    });
+                }
 
                 navLinks.forEach(function(link) {
                     link.classList.toggle('nav-active', link.getAttribute('href').slice(1) === id);
@@ -407,15 +426,36 @@
                     clearTimeout(sectionSwitchTimer);
                 }
 
+                setLayoutMode(id);
+
                 navLinks.forEach(function(link) {
                     link.classList.toggle('nav-active', clickedLink ? link === clickedLink : link.getAttribute('href').slice(1) === id);
                 });
 
+                const samePortfolioGroup =
+                    currentSection &&
+                    nextSection &&
+                    currentSection.id !== 'gallery' &&
+                    id !== 'gallery';
+
+                if (samePortfolioGroup && id === 'about') {
+                    if (currentSection) {
+                        currentSection.classList.remove('active', 'is-leaving');
+                    }
+                    activateSection(id, false);
+                    return;
+                }
+
                 if (currentSection) {
                     currentSection.classList.remove('active');
                     currentSection.classList.add('is-leaving');
-                    document.body.classList.remove('gallery-view', 'portfolio-layout', 'about-view');
                 }
+
+                if (rightSection) {
+                    rightSection.scrollTop = 0;
+                }
+
+                const pauseBeforeShow = usesPacedTransition(id) ? SECTION_PAUSE_MS : PAUSE_MS;
 
                 sectionSwitchTimer = setTimeout(function() {
                     if (currentSection) {
@@ -423,8 +463,8 @@
                     }
 
                     sectionSwitchTimer = setTimeout(function() {
-                        activateSection(id);
-                    }, PAUSE_MS);
+                        activateSection(id, usesPacedTransition(id));
+                    }, pauseBeforeShow);
                 }, FADE_OUT_MS);
             }
 
