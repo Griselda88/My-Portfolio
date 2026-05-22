@@ -189,32 +189,55 @@
             <!-- PROJECTS -->
             <section id="projects">
 
-                <h3>Projects</h3>
+                <div class="projects-carousel">
+                    <div class="projects-track">
+                        <div class="project-slide">
+                            <h3 class="project-title">Rotaract Club of Academic City University Book Drive Initiative</h3>
+                            <div class="project-feature">
+                                <img
+                                    src="images/Rotaract%20book%20drive.jpeg"
+                                    alt="Rotaract Club book drive at Hopeway Ministries Ghana"
+                                    class="project-image"
+                                />
+                                <p class="project-feature-text">
+                                    As part of one of the community service projects organized with my fellow executives and members of the Rotaract Club of Academic City, we embarked on a book drive initiative aimed at supporting children at Hopeway Ministries Ghana. Through this project, we donated a variety of books to encourage learning and reading among the children, alongside essential items such as stationery, toiletries, and foodstuffs. The initiative reflected our club’s commitment to community impact, education, and supporting the well-being of children in need.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="project-slide">
+                            <h3 class="project-title">Beach Cleanup Project Organized by the Rotaract Club of Academic City University</h3>
+                            <div class="project-feature">
+                                <img
+                                    src="images/beach%20cleanup1.jpeg"
+                                    alt="Rotaract Club beach cleanup at Labadi Beach"
+                                    class="project-image"
+                                />
+                                <p class="project-feature-text">
+                                    As part of another community service initiative carried out with my fellow executives and members of the Rotaract Club of Academic City University, we organized a beach cleanup project at Labadi Beach in recognition of the month of March, which focused on Water, Sanitation, and Hygiene (WASH). The project involved cleaning sections of the beach to promote environmental cleanliness, proper sanitation practices, and public awareness about maintaining cleaner coastal spaces. Through this initiative, we contributed to environmental sustainability while encouraging community responsibility and teamwork.
+                                </p>
 
-                <div class="card">
-
-                    <h4>Library Management System</h4>
-
-                    <p>
-                        Developed a Java-based GUI application
-                        for managing books and records using
-                        file storage.
-                    </p>
-
+                            </div>
+                        </div>
+                        <div class="project-slide">
+                            <h3 class="project-title">Educational Leadership Outreach Project</h3>
+                            <div class="project-feature">
+                                <img
+                                    src="images/ed_leadership1.jpeg"
+                                    alt="Educational Leadership outreach at Kwabenya Atomic M/A Basic School"
+                                    class="project-image"
+                                />
+                                <p class="project-feature-text">
+                                    As part of an Educational Leadership project at Academic City University, my team organized a four-week outreach program at Kwabenya Atomic M/A Basic School for JHS 2 and 3 students. We facilitated interactive sessions on personal hygiene, financial literacy, peer pressure, and conflict management to equip students with practical life skills beyond the classroom curriculum. To further support their education, we concluded the project by donating stationery and learning materials purchased through team contributions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-
-
-                <div class="card">
-
-                    <h4>Portfolio Website</h4>
-
-                    <p>
-                        Designed and developed a responsive
-                        personal portfolio website using
-                        HTML and CSS.
-                    </p>
-
+                <div class="project-controls">
+                    <button type="button" class="project-arrow project-prev" aria-label="Previous project" disabled>&#10094;</button>
+                    <span class="project-indicator" aria-live="polite">1 / 3</span>
+                    <button type="button" class="project-arrow project-next" aria-label="Next project">&#10095;</button>
                 </div>
 
             </section>
@@ -227,11 +250,33 @@
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.right-section section');
             const navLinks = document.querySelectorAll('.side-nav a');
+            const rightSection = document.querySelector('.right-section');
 
             function showSection(id) {
                 sections.forEach(section => {
                     section.classList.toggle('active', section.id === id);
                 });
+
+                navLinks.forEach(link => {
+                    link.classList.toggle('nav-active', link.getAttribute('href').slice(1) === id);
+                });
+            }
+
+            function goToSection(id) {
+                showSection(id);
+
+                const section = document.getElementById(id);
+                if (!section) return;
+
+                if (id === 'projects' && typeof updateProjectsCarousel === 'function') {
+                    requestAnimationFrame(updateProjectsCarousel);
+                }
+
+                if (rightSection) {
+                    rightSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             navLinks.forEach(link => {
@@ -239,14 +284,56 @@
 
                 link.addEventListener('click', function(event) {
                     event.preventDefault();
-                    showSection(targetId);
-
-                    const section = document.getElementById(targetId);
-                    if (section) {
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                    goToSection(targetId);
                 });
             });
+
+            showSection('about');
+
+            // Projects carousel
+            const projectsTrack = document.querySelector('.projects-track');
+            const projectPrev = document.querySelector('.project-prev');
+            const projectNext = document.querySelector('.project-next');
+            const projectIndicator = document.querySelector('.project-indicator');
+            const projectSlides = document.querySelectorAll('.project-slide');
+            let currentProject = 0;
+            const totalProjects = projectSlides.length;
+
+            function updateProjectsCarousel() {
+                if (!projectsTrack || totalProjects === 0) return;
+
+                projectsTrack.style.transform = `translateX(-${currentProject * 100}%)`;
+
+                if (projectPrev) projectPrev.disabled = currentProject === 0;
+                if (projectNext) projectNext.disabled = currentProject >= totalProjects - 1;
+                if (projectIndicator) projectIndicator.textContent = `${currentProject + 1} / ${totalProjects}`;
+            }
+
+            function initProjectsCarousel() {
+                if (!projectsTrack || totalProjects === 0) return;
+
+                updateProjectsCarousel();
+
+                if (projectPrev) {
+                    projectPrev.addEventListener('click', function() {
+                        if (currentProject > 0) {
+                            currentProject--;
+                            updateProjectsCarousel();
+                        }
+                    });
+                }
+
+                if (projectNext) {
+                    projectNext.addEventListener('click', function() {
+                        if (currentProject < totalProjects - 1) {
+                            currentProject++;
+                            updateProjectsCarousel();
+                        }
+                    });
+                }
+            }
+
+            initProjectsCarousel();
         });
     </script>
 </body>
